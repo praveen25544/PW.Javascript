@@ -22,3 +22,4 @@ console.log(values); //['praveen',22,'dal chawal']
 //OBJECT.ENTRIES()
 let entries=Object.entries(user);
 console.log(entries); //[['name','praveen'],['age',22],['khana','dal chawal']] 
+

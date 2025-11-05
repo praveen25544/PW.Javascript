@@ -84,9 +84,34 @@
 
 
 //reduceright method for nested arr
-let arr=[[1,2],[3,4],[5,6]];//accumulator is array of arrays
-let newArr=arr.reduceRight((acc,curVal) => {//current value is array
-    return acc.concat(curVal);
-},[]); // [] it is initial value of acc
-console.log(newArr);
+// let arr=[[1,2],[3,4],[5,6]];//accumulator is array of arrays
+// let newArr=arr.reduceRight((acc,curVal) => {//current value is array
+//     return acc.concat(curVal); // it is concatenating arrays
+// },[]); // [] it is initial value of acc 
+// console.log(newArr);
 
+
+//SOME & EVERY METHOD
+    // let arr=[2,4,6,8,10];
+    // let res=arr.every((val) => {  //-- checks if all elements satisfy the condition : ALL TRUE
+    //     return val%2==0;
+    // });
+    // console.log(res); 
+    // let res1=arr.some((val) => {   //-- checks if at least one element IS TRUE
+    //     return val>8;
+    // });
+    // console.log(res1);
+
+   let marks1=[45,67,94,23,12,90];
+   let marks2=[45,67,94,23,12,90];//<50 is fail //1 fail all fail
+    let res=marks1.every((val) => {
+        return val>=50;
+    });
+    console.log(res);   
+    let res1=marks2.some((val) => {
+
+        
+        return val<50;  
+    });
+    console.log(res1);
+    

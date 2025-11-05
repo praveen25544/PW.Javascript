@@ -11,4 +11,4 @@ It is designed to track my learning journey, improve problem-solving skills, and
 - ES6+ features (arrow functions, destructuring, template literals, etc.)  
 - Small projects and mini-apps  
 
-Feel free to explore, learn, and contribute!
+
