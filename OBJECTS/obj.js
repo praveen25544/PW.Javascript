@@ -70,13 +70,21 @@
 // let key="name";
 // console.log(key in user);  //-- true 
 
-const course ={
-    title :"javascript",
-    duration: "6 months",
-};
-// for (let key in course){
-//     console.log(key);
+// const course ={
+//     title :"javascript",
+//     duration: "6 months",
+// };
+// // for (let key in course){  // 1st demo
+// //     console.log(key);
+// // }
+// Object.entries(course).forEach(function(val){     //2nd demo
+//     console.log(val[0] ," : ",val[1])
+// });
+
+
+// const key = "role"
+// let obj1 = {
+//     name : "praveen",
+//     [key] : "admin",
 // }
-Object.entries(course).forEach(function(val){
-    console.log(val[0] ," : ",val[1])
-});
+// console.log(obj1);

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<select id="drop"><option>Loading...</option></select>
+<pre id="out">Select a user to see details</pre>
+<p id="status">Status will appear here...</p>
+
+<script>
+const drop = document.getElementById("drop");
+const out  = document.getElementById("out");
+const status = document.getElementById("status");
+
+let users = [];
+
+// -------- 1️⃣ Load all users --------
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+
+xhr.onload = function() {
+    if (xhr.status === 200) {              // ✅ success
+        try {
+            users = JSON.parse(xhr.responseText); // parse JSON safely
+            drop.innerHTML = "<option value=''>Select User</option>";
+
+            //iterated all the users and populated them in dropdown
+            users.forEach(u => {
+                const opt = document.createElement("option");
+                opt.value = u.id;
+                opt.textContent = u.username;
+                drop.appendChild(opt);
+            });
+
+            status.textContent = "Users loaded ✔";
+
+        } catch(error) {                        // ❌ parse error
+            status.textContent = "JSON parse error ❌";
+        }
+    } else {                                // ❌ HTTP error
+        status.textContent = "Failed to load users ❌ (Status: " + xhr.status + ")";
+    }
+};
+xhr.send();
+
+// -------- 2️⃣ User select --------
+drop.addEventListener("change", function() {
+    const id = this.value;
+    if (!id) return;
+
+    const user = users.find(u => u.id == id);
+
+    try {
+        out.textContent = JSON.stringify(user, null, 4);
+        status.textContent = "User details loaded ✔";
+    } catch(e) {
+        status.textContent = "Error displaying user ❌";
+    }
+});
+
+</script>
+</body>
+</html>

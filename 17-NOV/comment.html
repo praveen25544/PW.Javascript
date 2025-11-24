@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Fact with Counter</title>
+</head>
+<body>
+
+    <h2>Random Fact (Updates Every 5 Seconds)</h2>
+
+    <!-- Fact paragraph -->
+    <p id="fact">Loading fact...</p>
+
+    <!-- Counter paragraph -->
+    <p id="count">API Calls: 0</p>
+
+    <script>
+        // Step 1: p tags select kiye
+        const fact = document.getElementById("fact");
+        const count = document.getElementById("count");
+
+        // Step 2: Counter variable banaya
+        let apiCount = 0;
+
+        // Step 3: API call function
+        function getFact() {
+            const xhr = new XMLHttpRequest();   // object banaya
+
+            xhr.open("GET", "https://uselessfacts.jsph.pl/api/v2/facts/random");
+
+            xhr.onload = function () {
+                const data = JSON.parse(xhr.responseText);
+
+                fact.textContent = data.text;    // fact update
+
+                // Counter ++
+                apiCount++;
+
+                // Counter paragraph update
+                count.textContent = "API Calls: " + apiCount;
+            };
+
+            xhr.send();   // request bhej diya
+        }
+
+        // Step 4: First fact call
+        getFact();
+
+        // Step 5: Har 5 second me new fact
+        setInterval(getFact, 5000);
+    </script>
+
+</body>
+</html>

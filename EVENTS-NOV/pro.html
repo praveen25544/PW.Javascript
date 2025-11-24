@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pixel Art App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f0f0f0;
+      user-select: none;
+    }
+
+    #grid-container {
+      margin: 20px;
+      border: 1px solid black;
+      display: grid;
+    }
+
+    .pixel {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+
+    #controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      background-color: rgb(247, 12, 51);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: rgb(190, 120, 130);
+    }
+
+    .active {
+      background-color: #333 !important;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>🎨 Pixel Art App</h1>
+
+  <div id="controls">
+    <input type="color" id="color-picker" value="#000000">
+    <button id="eraser-btn">Eraser</button>
+    <button id="clear-btn">Clear Canvas</button>
+    <input type="number" id="grid-size" value="16" min="5" max="64">
+    <button id="resize-btn">Resize</button>
+    <button id="reset-btn">Reset</button>
+  </div>
+
+  <div id="grid-container"></div>
+
+  <script>
+    const gridContainer = document.getElementById("grid-container");
+    const colorPicker = document.getElementById("color-picker");
+    const eraserBtn = document.getElementById("eraser-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    const gridSizeInput = document.getElementById("grid-size");
+    const resizeBtn = document.getElementById("resize-btn");
+    const resetBtn = document.getElementById("reset-btn");
+
+    let gridSize = 16;
+    let isDrawing = false;
+    let isErasing = false;
+
+    // Create grid
+    function createGrid(size) {
+      gridContainer.innerHTML = "";
+      gridContainer.style.gridTemplateColumns = `repeat(${size}, 20px)`;
+      gridContainer.style.gridTemplateRows = `repeat(${size}, 20px)`;
+
+      for (let i = 0; i < size * size; i++) {
+        const pixel = document.createElement("div");
+        pixel.classList.add("pixel");
+
+        // Drawing with mouse
+        pixel.addEventListener("mousedown", () => {
+          isDrawing = true;
+          pixel.style.backgroundColor = isErasing ? "" : colorPicker.value;
+        });
+
+        pixel.addEventListener("mouseover", () => {
+          if (isDrawing) {
+            pixel.style.backgroundColor = isErasing ? "" : colorPicker.value;
+          }
+        });
+
+        pixel.addEventListener("mouseup", () => (isDrawing = false));
+
+        gridContainer.appendChild(pixel);
+      }
+    }
+
+    document.body.addEventListener("mouseup", () => (isDrawing = false));
+
+    // Eraser toggle
+    eraserBtn.addEventListener("click", () => {
+      isErasing = !isErasing;
+      eraserBtn.classList.toggle("active");
+      eraserBtn.textContent = isErasing ? "Eraser (On)" : "Eraser";
+    });
+
+    // Clear canvas
+    clearBtn.addEventListener("click", () => {
+      document.querySelectorAll(".pixel").forEach(pixel => {
+        pixel.style.backgroundColor = "";
+      });
+    });
+
+    // Resize grid
+    resizeBtn.addEventListener("click", () => {
+      let newSize = parseInt(gridSizeInput.value);
+      if (newSize >= 5 && newSize <= 64) {
+        gridSize = newSize;
+        createGrid(gridSize);
+      } else {
+        alert("Please enter a size between 5 and 64");
+      }
+    });
+
+    // Reset app (restore defaults)
+    resetBtn.addEventListener("click", () => {
+      gridSize = 16;
+      gridSizeInput.value = 16;
+      colorPicker.value = "#000000";
+      isErasing = false;
+      eraserBtn.classList.remove("active");
+      createGrid(gridSize);
+    });
+
+    // Initialize grid
+    createGrid(gridSize);
+  </script>
+</body>
+</html>

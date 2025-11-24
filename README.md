@@ -10,5 +10,6 @@ It is designed to track my learning journey, improve problem-solving skills, and
 - DOM manipulation & event handling  
 - ES6+ features (arrow functions, destructuring, template literals, etc.)  
 - Small projects and mini-apps  
+- all has been wrapped with comment.
 
 
